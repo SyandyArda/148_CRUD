@@ -1,7 +1,7 @@
 const express = require('express');
 let mysql = require('mysql2');
 const app = express();
-const port = 3001;
+const port = 3309;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -37,7 +37,7 @@ app.get('/mahasiswa', (req, res) => {
         return;
         }
 
-        res.json({ message: "Data berhasil diambil", data: results });
+        res.json(results);
     });
 });
 
@@ -63,9 +63,20 @@ app.post('/mahasiswa', (req, res) => {
 );
 
 app.put('/api/mahasiswa/:id', (req, res) => {
-    const userId = req params.id;
-}
-
+    const userId = req.params.id;
+    const { nama, alamat , agama } = req.body;
+    db.query(
+        "UPDATE bidodata SET nama = ?, alamat = ?, agama = ? WHERE id= ?",
+        [nama, alamat, agama, userId],
+    (err, results) => {
+        if (err) {
+                console.error(err);
+                return res.status(500).json({ message: "Database Error"});
+            }
+            res.json({message: "User Deleted Succesfully"});
+    }
+    );
+});
 
 app.delete('/api/mahasiswa/:id', (req, res) => {
     const userId = req.params.id;
