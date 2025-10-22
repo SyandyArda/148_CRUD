@@ -63,18 +63,13 @@ app.post('/mahasiswa', (req, res) => {
 );
 
 app.delete('/api/mahasiswa/:id', (req, res) => {
-    const userID = req.params.id;
+    const userId = req.params.id;
 
-    db.query(
-        "INSERT INTO biodata (nama, alamat, agama) VALUES (?, ?, ?)",
-        [nama, alamat, agama],
-        (err, results) => {
-            if (err) {
+    db.query('DELETE FROM biodata WHERE id = ?', [userId], (err, results) => {
+        if (err) {
                 console.error(err);
-                return.res.status(500).json({ message: "Database Error"});
+                return res.status(500).json({ message: "Database Error"});
             }
-            res.status(201).json({message: "User Created Succesfully"});
-        }
-    );
+            res.json({message: "User Deleted Succesfully"});
+    });
 }
-);
