@@ -62,6 +62,11 @@ app.post('/mahasiswa', (req, res) => {
 }
 );
 
+app.put('/api/mahasiswa/:id', (req, res) => {
+    const userId = req params.id;
+}
+
+
 app.delete('/api/mahasiswa/:id', (req, res) => {
     const userId = req.params.id;
 
@@ -72,4 +77,4 @@ app.delete('/api/mahasiswa/:id', (req, res) => {
             }
             res.json({message: "User Deleted Succesfully"});
     });
-}
+});
