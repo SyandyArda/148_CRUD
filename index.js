@@ -33,12 +33,13 @@ app.get('/mahasiswa', (req, res) => {
     db.query('SELECT *from biodata', (err, results) => {
         if (err) {
             console.error("Error executing query:", err.stack);
-            return res.status(500).json('Error fetching mahasiswa');
+            res.status(500).send('Error fetching mahasiswa');
+        return;
         }
+
         res.json({ message: "Data berhasil diambil", data: results });
     });
 });
-
 
 app.post('/mahasiswa', (req, res) => {
     const {nama, alamat, agama} = req.body;
@@ -50,5 +51,30 @@ app.post('/mahasiswa', (req, res) => {
     db.query(
         "INSERT INTO biodata (nama, alamat, agama) VALUES (?, ?, ?)",
         [nama, alamat, agama],
-        (err, results)
-    )
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return.res.status(500).json({ message: "Database Error"});
+            }
+            res.status(201).json({message: "User Created Succesfully"});
+        }
+    );
+}
+);
+
+app.delete('/api/mahasiswa/:id', (req, res) => {
+    const userID = req.params.id;
+
+    db.query(
+        "INSERT INTO biodata (nama, alamat, agama) VALUES (?, ?, ?)",
+        [nama, alamat, agama],
+        (err, results) => {
+            if (err) {
+                console.error(err);
+                return.res.status(500).json({ message: "Database Error"});
+            }
+            res.status(201).json({message: "User Created Succesfully"});
+        }
+    );
+}
+);
